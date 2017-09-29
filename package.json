@@ -4,6 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "build": "tsc",
+        "build:watch": "npm run build -- --watch",
         "commit": "git-cz"
     },
     "repository": {
@@ -19,7 +21,8 @@
     "homepage": "https://github.com/ngfk/ng-store#readme",
     "devDependencies": {
         "commitizen": "^2.9.6",
-        "cz-customizable": "^5.2.0"
+        "cz-customizable": "^5.2.0",
+        "typescript": "^2.5.3"
     },
     "config": {
         "commitizen": {
