@@ -91,7 +91,7 @@ export class StoreService extends NgStore<State, ActionMap> {
 }
 ```
 
-> Make sure to inject this service in your `NgModule`.
+> Make sure to provide this service in your `NgModule`.
 
 ## Example Usage
 ```typescript
