@@ -21,8 +21,8 @@ describe('reducer-creation', () => {
             const reducer = builder.init(initialState).build();
             const state = reducer();
 
-            expect(state).to.eq(initialState);
-            expect(state).to.eql(initialState);
+            expect(state).not.eq(initialState);
+            expect(state).eql(initialState);
         });
 
         it('allow adding cases', () => {
@@ -123,7 +123,7 @@ describe('reducer-creation', () => {
             const reducer = createReducer<any, any>(initialState, {});
             const state = reducer();
 
-            expect(state).eq(initialState);
+            expect(state).not.eq(initialState);
             expect(state).eql(initialState);
         });
 

@@ -15,7 +15,18 @@ export class ReducerBuilder<State, ActionMap> {
      * @param initial The initial state
      */
     public init(initial: State): this {
-        this.initial = initial;
+        if (typeof initial === 'object') {
+            if (Object.prototype.toString.call(initial) === '[object Array]') {
+                // Create copy of the array
+                this.initial = (initial as any).slice() as any;
+            } else {
+                // Create copy of the object
+                this.initial = Object.apply({}, initial);
+            }
+        } else {
+            // No need to create a copy
+            this.initial = initial;
+        }
         return this;
     }
 
