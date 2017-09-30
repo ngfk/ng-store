@@ -1,7 +1,9 @@
 import { expect } from 'chai';
 
-import { createReducer, ReducerBuilder } from '../src/reducer-creation';
-import { Todo, TodoActionMap } from './models/todo';
+import { Reducer } from '../src/reducer';
+import { combineReducers, createReducer, ReducerBuilder } from '../src/reducer-creation';
+import { createFilterReducer, Filter } from './models/filter';
+import { createTodoReducer, Todo, TodoActionMap } from './models/todo';
 
 describe('reducer-creation', () => {
     describe('ReducerBuilder', () => {
@@ -133,7 +135,6 @@ describe('reducer-creation', () => {
                 TODO_DELETE: 'TODO_DELETE',
                 TODO_EDIT: 'TODO_EDIT',
                 TODO_COMPLETE: 'TODO_COMPLETE',
-                TODO_COMPLETE_ALL: 'TODO_COMPLETE_ALL',
                 TODO_CLEAR: 'TODO_CLEAR'
             };
 
@@ -142,7 +143,6 @@ describe('reducer-creation', () => {
                 TODO_DELETE: (state, payload) => payload.toString(),
                 TODO_EDIT: (state, payload) => payload.text,
                 TODO_COMPLETE: (state, payload) => payload.toString(),
-                TODO_COMPLETE_ALL: (state, payload) => 'TODO_COMPLETE_ALL',
                 TODO_CLEAR: (state, payload) => 'TODO_CLEAR'
             });
             const states: States = {
@@ -162,10 +162,6 @@ describe('reducer-creation', () => {
                     type: 'TODO_COMPLETE',
                     payload: 'TODO_COMPLETE'
                 }),
-                TODO_COMPLETE_ALL: reducer(initialState, {
-                    type: 'TODO_COMPLETE_ALL',
-                    payload: undefined
-                }),
                 TODO_CLEAR: reducer(initialState, {
                     type: 'TODO_CLEAR',
                     payload: undefined
@@ -175,6 +171,55 @@ describe('reducer-creation', () => {
             Object.keys(states).forEach((action: keyof TodoActionMap) => {
                 expect(states[action]).eq(resultStates[action]);
             });
+        });
+    });
+
+    describe('combineReducers', () => {
+        interface State {
+            readonly todos: Todo[];
+            readonly filter: Filter;
+        }
+
+        const initialState: State = {
+            todos: [],
+            filter: Filter.All
+        };
+        let reducer: Reducer<State>;
+
+        beforeEach(() => {
+            reducer = combineReducers<State>({
+                todos: createTodoReducer(initialState.todos),
+                filter: createFilterReducer(initialState.filter)
+            });
+        });
+
+        it('respect initial state', () => {
+            const state = reducer();
+
+            expect(state).not.eq(initialState);
+            expect(state).eql(initialState);
+        });
+
+        it('process actions from child reducers', () => {
+            const todoPayload = '70949338-5d59-5b29-96ea-e365d19d6c67';
+            const todoAction = { type: 'TODO_ADD', payload: todoPayload };
+            const todoResult: State = {
+                ...initialState,
+                todos: [{ id: 0, text: todoPayload, completed: false }]
+            };
+
+            const filterPayload = Filter.Completed;
+            const filterAction = { type: 'FILTER_SET', payload: filterPayload };
+            const filterResult: State = {
+                ...initialState,
+                filter: filterPayload
+            };
+
+            const todoState = reducer(initialState, todoAction);
+            const filterState = reducer(initialState, filterAction);
+
+            expect(todoState).eql(todoResult);
+            expect(filterState).eql(filterResult);
         });
     });
 });
