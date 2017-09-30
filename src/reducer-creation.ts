@@ -15,6 +15,7 @@ export class ReducerBuilder<State, ActionMap> {
      * @param initial The initial state
      */
     public init(initial: State): this {
+        this.initial = initial;
         return this;
     }
 
