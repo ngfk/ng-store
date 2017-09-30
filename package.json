@@ -1,21 +1,19 @@
 {
-    "name": "@ngfk/ng-store",
+    "name": "@ngfk/store-monorepo",
     "version": "0.0.1",
     "description": "State management powered by RxJS, enforcing type safety",
     "main": "dist/index.js",
     "typings": "index.d.ts",
     "scripts": {
-        "build": "tsc",
-        "build:watch": "npm run build -- --watch",
-        "test": "mocha --compilers ts:ts-node/register test/**/*.spec.ts",
-        "test:watch": "npm run test -- --watch --watch-extensions ts",
+        "build": "node ./scripts/build.js",
+        "test": "node ./scripts/test.js",
+        "check": "npm run clean && node ./scripts/check.js",
         "clean": "rimraf ./dist",
-        "check": "npm run clean && npm run test && npm run build",
         "commit": "git-cz"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ngfk/ng-store.git"
+        "url": "git+https://github.com/ngfk/store.git"
     },
     "keywords": [
         "ngfk",
@@ -25,9 +23,9 @@
     "author": "Rick Koster <ngf.koster@outlook.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/ngfk/ng-store/issues"
+        "url": "https://github.com/ngfk/store/issues"
     },
-    "homepage": "https://github.com/ngfk/ng-store#readme",
+    "homepage": "https://github.com/ngfk/store#readme",
     "devDependencies": {
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.43",

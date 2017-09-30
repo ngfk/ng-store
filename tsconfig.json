@@ -3,12 +3,11 @@
         // Basic Options
         "target": "es5",
         "module": "commonjs",
-        "lib": ["dom", "esnext"],
+        "lib": ["esnext"],
         "allowJs": false,
         "checkJs": false,
         "declaration": true,
         "sourceMap": true,
-        "outDir": "./dist",
         "downlevelIteration": true,
 
         // Strict Type-Checking Options
@@ -26,8 +25,9 @@
 
         // Module Resolution Options
         "moduleResolution": "node",
-        "baseUrl": "./src",
-        "paths": {}
-    },
-    "include": ["src"]
+        "baseUrl": "./packages",
+        "paths": {
+            "@ngfk/*": ["./*"]
+        }
+    }
 }
