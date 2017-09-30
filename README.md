@@ -2,6 +2,8 @@
 
 State management powered by [RxJS](https://github.com/ReactiveX/rxjs) enforcing type safety, inspired by [`@ngrx/store`](https://github.com/ngrx/platform) and [`Redux`](http://redux.js.org). Creating reducers and dispatching actions will be type safe.
 
+[![npm version](https://img.shields.io/npm/v/@ngfk/ng-store.svg)](https://www.npmjs.com/package/@ngfk/ng-store)
+
 ## Setup
 
 1. Define state structure
