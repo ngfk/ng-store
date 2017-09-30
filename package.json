@@ -1,29 +1,32 @@
 {
-    "name": "ng-store",
+    "name": "@ngfk/ng-store",
     "version": "0.0.1",
-    "description": "",
-    "main": "index.js",
+    "description": "State management powered by RxJS, enforcing type safety",
+    "main": "dist/index.js",
+    "typings": "index.d.ts",
     "scripts": {
         "build": "tsc",
         "build:watch": "npm run build -- --watch",
         "test": "mocha --compilers ts:ts-node/register test/**/*.spec.ts",
         "test:watch": "npm run test -- --watch --watch-extensions ts",
+        "check": "npm run test && npm run build",
         "commit": "git-cz"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/ngfk/ng-store.git"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "ngfk",
+        "rxjs",
+        "angular"
+    ],
+    "author": "Rick Koster <ngf.koster@outlook.com>",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/ngfk/ng-store/issues"
     },
     "homepage": "https://github.com/ngfk/ng-store#readme",
-    "peerDependencies": {
-        "rxjs": "^5.0.0"
-    },
     "devDependencies": {
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.43",
@@ -35,6 +38,13 @@
         "ts-node": "^3.3.0",
         "typescript": "^2.5.3"
     },
+    "peerDependencies": {
+        "rxjs": "^5.0.0"
+    },
+    "files": [
+        "dist",
+        "index.d.ts"
+    ],
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-customizable"
