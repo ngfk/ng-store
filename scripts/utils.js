@@ -58,5 +58,5 @@ exports.setExit = code => {
 exports.projects = ['store'];
 exports.copiedFiles = ['package.json', 'README.md'];
 exports.generatedFiles = {
-    'index.d.ts': `export * from './dist';\n\n`
+    'index.d.ts': `export * from './dist';\n`
 };
