@@ -8,7 +8,7 @@
         "type": "git",
         "url": "git+https://github.com/ngfk/store.git"
     },
-    "keywords": ["ngfk", "rxjs", "angular"],
+    "keywords": ["rxjs", "angular", "store"],
     "author": "Rick Koster <ngf.koster@outlook.com>",
     "license": "MIT",
     "bugs": {
