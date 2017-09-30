@@ -1,3 +1,5 @@
+'use strict';
+
 const { promisify } = require('util');
 const { exec, spawn } = require('child_process');
 const { writeFile, createReadStream, createWriteStream } = require('fs');
