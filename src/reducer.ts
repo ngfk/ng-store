@@ -1,7 +1,7 @@
 import { Action, TypedAction } from './action';
 
 export interface Reducer<State> {
-    (state: State, action: Action<any>): State;
+    (state?: State, action?: Action<any>): State;
 }
 
 export type SubReducer<State, ActionMap, Type extends keyof ActionMap> = (
