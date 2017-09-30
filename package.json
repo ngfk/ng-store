@@ -1,6 +1,6 @@
 {
     "name": "@ngfk/ng-store",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "State management powered by RxJS, enforcing type safety",
     "main": "dist/index.js",
     "typings": "index.d.ts",
