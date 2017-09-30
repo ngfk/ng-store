@@ -9,7 +9,6 @@
         "declaration": true,
         "sourceMap": true,
         "outDir": "./dist",
-        "rootDir": "./src",
         "downlevelIteration": true,
 
         // Strict Type-Checking Options
@@ -29,5 +28,6 @@
         "moduleResolution": "node",
         "baseUrl": "./src",
         "paths": {}
-    }
+    },
+    "include": ["src"]
 }
