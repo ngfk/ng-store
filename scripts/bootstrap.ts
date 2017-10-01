@@ -5,14 +5,10 @@ import { link, loadPackageJson, makeDir } from './utils/fs';
 
 const doLink = async (
     project: string,
+    packages: string[],
     dependency: string,
     config: ProjectConfig
 ) => {
-    const packages = config.packages.map(p => `@${config.scope}/${p}`);
-    if (packages.indexOf(dependency) < 0) {
-        return;
-    }
-
     const targetProject = dependency.slice(config.scope.length + 2);
     const dir = join(
         config.source,
@@ -43,15 +39,20 @@ const doLink = async (
 };
 
 const bootstrap = async (project: string, config: ProjectConfig) => {
-    const { dependencies } = await loadPackageJson(project, config);
-    if (!dependencies) {
+    const packages = config.packages.map(p => `@${config.scope}/${p}`);
+    const packageJson = await loadPackageJson(project, config);
+
+    const deps = [
+        ...Object.keys(packageJson.dependencies || {}),
+        ...Object.keys(packageJson.peerDependencies || {})
+    ].filter(dep => packages.indexOf(dep) >= 0);
+
+    if (!deps.length) {
         console.log('[bootstrap] %s, %s', project, 'no action required');
         return;
     }
 
-    const linkTasks = Object.keys(dependencies).map(dep =>
-        doLink(project, dep, config)
-    );
+    const linkTasks = deps.map(dep => doLink(project, packages, dep, config));
     await Promise.all(linkTasks);
 
     console.log('[bootstrap] %s, %s', project, 'finished');
