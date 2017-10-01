@@ -21,7 +21,7 @@ export class ReducerBuilder<State, ActionMap> {
                 this.initial = (initial as any).slice() as any;
             } else {
                 // Create copy of the object
-                this.initial = Object.apply({}, initial);
+                this.initial = { ...initial as any };
             }
         } else {
             // No need to create a copy

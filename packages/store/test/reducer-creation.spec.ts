@@ -6,6 +6,11 @@ import { createFilterReducer, Filter } from './models/filter';
 import { createTodoReducer, Todo, TodoActionMap } from './models/todo';
 
 describe('reducer-creation', () => {
+    interface State {
+        readonly todos: Todo[];
+        readonly filter: Filter;
+    }
+
     describe('ReducerBuilder', () => {
         let builder: ReducerBuilder<Todo[], TodoActionMap>;
 
@@ -14,15 +19,26 @@ describe('reducer-creation', () => {
         });
 
         it('set initial state', () => {
-            const initialState: Todo[] = [
+            const builder1 = new ReducerBuilder<Todo[], TodoActionMap>();
+            const builder2 = new ReducerBuilder<State, TodoActionMap>();
+
+            const initialState1: Todo[] = [
                 { id: 0, text: '', completed: false }
             ];
+            const initialState2: State = {
+                todos: [],
+                filter: Filter.All
+            };
 
-            const reducer = builder.init(initialState).build();
-            const state = reducer();
+            const reducer1 = builder1.init(initialState1).build();
+            const reducer2 = builder2.init(initialState2).build();
+            const state1 = reducer1();
+            const state2 = reducer2();
 
-            expect(state).not.eq(initialState);
-            expect(state).eql(initialState);
+            expect(state1).not.eq(initialState1);
+            expect(state1).eql(initialState1);
+            expect(state2).not.eq(initialState2);
+            expect(state2).eql(initialState2);
         });
 
         it('allow adding cases', () => {
@@ -175,11 +191,6 @@ describe('reducer-creation', () => {
     });
 
     describe('combineReducers', () => {
-        interface State {
-            readonly todos: Todo[];
-            readonly filter: Filter;
-        }
-
         const initialState: State = {
             todos: [],
             filter: Filter.All
