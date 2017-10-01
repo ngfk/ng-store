@@ -6,6 +6,7 @@
         "bootstrap": "ts-node ./scripts/bootstrap.ts",
         "build": "npm run clean && ts-node ./scripts/build.ts",
         "test": "ts-node ./scripts/test.ts",
+        "test:store": "mocha --compilers ts:ts-node/register ./packages/store/test/**/*.spec.ts --watch",
         "check": "npm run clean && ts-node ./scripts/check.ts",
         "clean": "rimraf ./dist",
         "commit": "git-cz"
