@@ -1,6 +1,6 @@
 {
     "name": "@ngfk/ng-store",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "State management powered by RxJS, enforcing type safety",
     "main": "index",
     "typings": "index.d.ts",
@@ -16,7 +16,7 @@
     },
     "homepage": "https://github.com/ngfk/store#readme",
     "dependencies": {
-        "@ngfk/store": "*"
+        "@ngfk/store": "0.0.3"
     },
     "peerDependencies": {
         "@angular/core": "^4.0.0",
