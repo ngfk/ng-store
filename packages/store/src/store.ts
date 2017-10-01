@@ -4,17 +4,22 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/shareReplay';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Action } from './action';
 import { Reducer } from './reducer';
 
 /**
+ * Internal init action type
+ */
+const INIT = '@@ngfk/INIT';
+
+/**
  * Internal reset action type
  */
-const RESET = '@@RESET';
+const RESET = '@@ngfk/RESET';
 
 /**
  * Store class containing an action and a state stream. Actions can be
@@ -42,10 +47,10 @@ export class Store<State, ActionMap> {
     protected initial: State;
 
     /**
-     * The internal action Subject, the `Store.action$` is created from this
-     * action Subject.
+     * The internal action BehaviorSubject, the `Store.action$` is created
+     * from this action BehaviorSubject.
      */
-    protected actionSubject: Subject<Action<any>>;
+    protected actionSubject: BehaviorSubject<Action<any>>;
 
     /**
      * Creates a new instance of the Store class.
@@ -58,7 +63,8 @@ export class Store<State, ActionMap> {
         this.initial = initial || rootReducer();
 
         // Construct custom, shared, action$ using a new Subject.
-        this.actionSubject = new Subject();
+        const dummyAction: Action<any> = { type: INIT, payload: undefined };
+        this.actionSubject = new BehaviorSubject(dummyAction);
         this.action$ = this.actionSubject.asObservable().share();
 
         // Construct an Observable state$ by reducing/scanning the actions over
