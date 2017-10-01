@@ -1,8 +1,8 @@
-# Ng-Store
+# @ngfk/store
 
 State management powered by [RxJS](https://github.com/ReactiveX/rxjs) enforcing type safety, inspired by [`@ngrx/store`](https://github.com/ngrx/platform) and [`Redux`](http://redux.js.org). Creating reducers and dispatching actions will be type safe.
 
-[![npm version](https://img.shields.io/npm/v/@ngfk/ng-store.svg)](https://www.npmjs.com/package/@ngfk/ng-store)
+[![npm version](https://img.shields.io/npm/v/@ngfk/store.svg)](https://www.npmjs.com/package/@ngfk/store)
 
 ## Setup
 
@@ -51,7 +51,7 @@ interface ActionMap extends TodoActionMap, FilterActionMap {}
 ### 3. Create reducers
 
 ```typescript
-const todoReducer = createReducer<Todo[], TodoActionMap>([], {
+const todosReducer = createReducer<Todo[], TodoActionMap>([], {
     TODO_ADD: (state, payload) => [
         ...state,
         { id: payload.id, text: payload.text, completed: false }
@@ -74,7 +74,7 @@ const filterReducer = createReducer<Filter, FilterActionMap>(Filter.All, {
 });
 
 const reducer = combineReducers<State>({
-    todos: todoReducer,
+    todos: todosReducer,
     filter: filterReducer
 });
 ```
@@ -82,45 +82,21 @@ const reducer = combineReducers<State>({
 ### 4. Create store service
 
 ```typescript
-import { Injectable } from '@angular/core';
-import { NgStore } from '@ngfk/ng-store';
-
-@Injectable()
-export class StoreService extends NgStore<State, ActionMap> {
-    constructor() {
-        super(reducer);
-    }
-}
+const store = new Store<State, ActionMap>(reducer);
 ```
-
-> Make sure to provide this service in your `NgModule`.
 
 ## Example Usage
 ```typescript
-import { Component } from '@angular/core';
+store.subscribe(state => {
+    console.log('New state:', state);
+});
 
-@Component({
-    selector: 'my-component',
-    template: `
-        <div>
-            <pre>{{todos$ | async | json}}</pre>
-            <button (click)="dispatch">dispatch</button>
-        </div>
-    `,
-})
-export class MyComponent {
+store.select(state => state.todos).subscribe(todos => {
+    console.log('New state.todos:', todos);
+});
 
-    public todos$: Observable<Todo[]>;
-
-    constructor(private store: StoreService) {
-        this.todos$ = this.store.select(state => state.todos);
-    }
-
-    public dispatch(): void {
-        this.store.dispatch('TODO_ADD', {
-            id: 0,
-            text: 'Dispatched TODO!'
-        });
-    }
-}
+store.dispatch('TODO_ADD', {
+    id: 0,
+    text: 'Dispatched TODO!'
+});
 ```
