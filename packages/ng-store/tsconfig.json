@@ -1,7 +1,9 @@
 {
     "extends": "../../tsconfig",
     "compilerOptions": {
-        "outDir": "../../dist/ng-store/dist"
+        "outDir": "../../dist/ng-store/dist",
+        "experimentalDecorators": true,
+        "skipLibCheck": true
     },
     "include": ["src"]
 }
