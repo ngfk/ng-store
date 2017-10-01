@@ -35,13 +35,6 @@
         "ts-node": "^3.3.0",
         "typescript": "^2.5.3"
     },
-    "peerDependencies": {
-        "rxjs": "^5.0.0"
-    },
-    "files": [
-        "dist",
-        "index.d.ts"
-    ],
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-customizable"
