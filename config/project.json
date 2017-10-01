@@ -1,0 +1,9 @@
+{
+    "packages": ["store"],
+    "source": "packages",
+    "dest": "dist",
+    "copy": ["package.json", "README.md"],
+    "generate": {
+        "index.d.ts": ["export * from './dist';", ""]
+    }
+}
