@@ -5,4 +5,4 @@ export {
     combineReducers
 } from './reducer-creation';
 export { Reducer, SubReducer } from './reducer';
-export { Store as NgStore } from './store';
+export { Store } from './store';

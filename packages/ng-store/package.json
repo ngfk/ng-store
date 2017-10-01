@@ -1,5 +1,5 @@
 {
-    "name": "@ngfk/store",
+    "name": "@ngfk/ng-store",
     "version": "0.0.1",
     "description": "State management powered by RxJS, enforcing type safety",
     "main": "index",
@@ -8,14 +8,18 @@
         "type": "git",
         "url": "git+https://github.com/ngfk/store.git"
     },
-    "keywords": ["state", "store"],
+    "keywords": ["rxjs", "angular", "state", "store"],
     "author": "Rick Koster <ngf.koster@outlook.com>",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/ngfk/store/issues"
     },
     "homepage": "https://github.com/ngfk/store#readme",
+    "dependencies": {
+        "@ngfk/store": "*"
+    },
     "peerDependencies": {
+        "@angular/core": "^4.0.0",
         "rxjs": "^5.0.0"
     },
     "files": ["dist", "index.d.ts"]

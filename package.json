@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/ngfk/store#readme",
     "devDependencies": {
+        "@angular/core": "^4.4.4",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.43",
         "@types/node": "^8.0.31",

@@ -1,6 +1,6 @@
 {
     "scope": "ngfk",
-    "packages": ["store"],
+    "packages": ["store", "ng-store"],
     "source": "packages",
     "dest": "dist",
     "copy": ["package.json", "README.md"],
