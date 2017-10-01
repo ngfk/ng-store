@@ -1,13 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { Reducer } from '@ngfk/store';
-
-import { NgStoreConstructor } from './ng-store';
+import { Reducer, StoreConstructor } from '@ngfk/store';
 
 @NgModule({})
 export class NgStoreModule {
     public static forRoot<
         State,
-        Store extends NgStoreConstructor<State>
+        Store extends StoreConstructor<State>
     >(options: {
         readonly store: Store;
         readonly reducer: Reducer<State>;
