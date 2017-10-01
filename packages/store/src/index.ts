@@ -5,4 +5,4 @@ export {
     combineReducers
 } from './reducer-creation';
 export { Reducer, SubReducer } from './reducer';
-export { Store } from './store';
+export { Store, StoreConstructor } from './store';
