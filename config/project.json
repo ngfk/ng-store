@@ -1,9 +1,16 @@
 {
+    "scope": "ngfk",
     "packages": ["store"],
     "source": "packages",
     "dest": "dist",
     "copy": ["package.json", "README.md"],
     "generate": {
-        "index.d.ts": ["export * from './dist';", ""]
+        "index.d.ts": ["export * from './dist';", ""],
+        "index.js": [
+            "\"use strict\"",
+            "Object.defineProperty(exports, \"__esModule\", { value: true });",
+            "module.exports = require(\"./dist/index\");",
+            ""
+        ]
     }
 }

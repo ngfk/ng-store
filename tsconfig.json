@@ -24,10 +24,6 @@
         "noFallthroughCasesInSwitch": false,
 
         // Module Resolution Options
-        "moduleResolution": "node",
-        "baseUrl": "./packages",
-        "paths": {
-            "@ngfk/*": ["./*"]
-        }
+        "moduleResolution": "node"
     }
 }

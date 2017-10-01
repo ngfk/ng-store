@@ -1,11 +1,12 @@
 const project = require('../../config/project.json');
 
 export interface ProjectConfig {
-    packages: string[];
-    source: string;
-    dest: string;
-    copy: string[];
-    generate: { [filename: string]: string };
+    readonly scope: string;
+    readonly packages: string[];
+    readonly source: string;
+    readonly dest: string;
+    readonly copy: string[];
+    readonly generate: { readonly [filename: string]: string };
 }
 
 export const getProjectConfig = (): ProjectConfig => {
@@ -19,6 +20,7 @@ export const getProjectConfig = (): ProjectConfig => {
     );
 
     return {
+        scope: project.scope,
         packages: project.packages,
         source: project.source,
         dest: project.dest,
