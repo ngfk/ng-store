@@ -100,3 +100,9 @@ store.dispatch('TODO_ADD', {
     text: 'Dispatched TODO!'
 });
 ```
+
+## Platforms
+
+| Platform | Package
+| ---------|-----------
+| Angular  | [@ngfk/ng-store](https://www.npmjs.com/package/@ngfk/ng-store)
