@@ -1,6 +1,6 @@
 {
     "name": "@ngfk/store-monorepo",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "State management powered by RxJS, enforcing type safety",
     "scripts": {
         "bootstrap": "ts-node ./scripts/bootstrap.ts",
