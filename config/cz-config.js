@@ -17,7 +17,7 @@ const types = Object.keys(typesMap).map(key => ({
     name: `${key}:${' '.repeat(10 - key.length - 1)}${typesMap[key]}`
 }));
 
-const scopes = ['store', 'ng-store', 'meta'];
+const scopes = ['store', 'ng-store', 'example', 'meta'];
 
 module.exports = {
     types,
