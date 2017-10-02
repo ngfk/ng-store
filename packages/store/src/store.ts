@@ -5,6 +5,7 @@ import 'rxjs/add/operator/scan';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { ConnectableObservable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -69,10 +70,11 @@ export class Store<State, ActionMap> implements IStore<State, ActionMap> {
             // Ensure every subscriber shares the same stream and receives the
             // last available value on subscribe, similar to the event stream
             // of a BehaviorSubject.
-            .multicast(new BehaviorSubject(this.initial))
-            // Use reference counting to manage the internal subscriptions of
-            // the Behavior Subject
-            .refCount();
+            .multicast(new BehaviorSubject(this.initial));
+
+        // The multicast operator returns a ConnectableObservable which must be
+        // connected to the internal Subject to begin emitting items.
+        (this.state$ as ConnectableObservable<State>).connect();
 
         // Subscribe to the state$ to update our internal reference to the
         // current state.
