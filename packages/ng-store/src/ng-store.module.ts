@@ -8,8 +8,11 @@ export class NgStoreOptions<S, A, T extends IStore<S, A>> {
     deps?: any[];
 }
 
-export function storeFactory(options: NgStoreOptions<any, any, any>) {
-    return new options.store(...(options.deps || []));
+export function storeFactory(
+    options: NgStoreOptions<any, any, any>,
+    ...deps: any[]
+) {
+    return new options.store(...(deps || []));
 }
 
 @NgModule({})
@@ -27,7 +30,7 @@ export class NgStoreModule {
                 {
                     provide: options.store,
                     useFactory: storeFactory,
-                    deps: [OPTIONS_TOKEN]
+                    deps: [OPTIONS_TOKEN, ...(options.deps || [])]
                 }
             ]
         };
