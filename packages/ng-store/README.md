@@ -86,6 +86,8 @@ const reducer = combineReducers<State>({
 import { Injectable } from '@angular/core';
 import { Store } from '@ngfk/store';
 
+import { ActionMap, reducer, State } from '../state';
+
 @Injectable()
 export class StoreService extends Store<State, ActionMap> {
     constructor() {
@@ -96,17 +98,19 @@ export class StoreService extends Store<State, ActionMap> {
 
 ```typescript
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgStoreModule } from '@ngfk/ng-store';
 
-import { StoreService } from '../services/store.service';
-
 @NgModule({
+    declarations: [AppComponent],
     imports: [
+        BrowserModule,
         NgStoreModule.forRoot({
-            store: StoreService,
-            deps: []
+            store: StoreService
         })
-    ]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
@@ -117,11 +121,14 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'my-component',
+    selector: 'app-root',
     template: `
         <div>
+            <button (click)="dispatch()">dispatch</button>
+            <button (click)="clear()">clear</button>
+            <hr>
+            <p>State:</p>
             <pre>{{todos$ | async | json}}</pre>
-            <button (click)="dispatch">dispatch</button>
         </div>
     `
 })
@@ -134,6 +141,10 @@ export class AppComponent {
 
     public dispatch(): void {
         this.store.dispatch('TODO_ADD', 'Dispatched TODO!');
+    }
+
+    public clear(): void {
+        this.store.reset();
     }
 }
 ```
