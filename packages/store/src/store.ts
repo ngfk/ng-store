@@ -21,7 +21,7 @@ const RESET = '@@ngfk/RESET';
  * Store class containing an action and a state stream. Actions can be
  * dispatched in a type safe manner to trigger state updates.
  */
-export class Store<State, ActionMap> {
+export class Store<State, ActionMap> implements IStore<State, ActionMap> {
     /**
      * The action stream processing every action.
      */
@@ -145,4 +145,20 @@ export class Store<State, ActionMap> {
             return originalReducer(state, action);
         };
     }
+}
+
+export interface IStore<S, A> {
+    action$: Observable<Action<any>>;
+    state$: Observable<S>;
+    state: S;
+
+    dispatch<Type extends keyof A>(type: Type, payload?: A[Type]): void;
+    select<T>(selector: (state: S) => T): Observable<T>;
+    reset(state?: S): void;
+
+    subscribe(
+        next?: (value: S) => void,
+        error?: (error: any) => void,
+        complete?: () => void
+    ): Subscription;
 }
