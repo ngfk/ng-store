@@ -1,20 +1,16 @@
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/multicast';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/shareReplay';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Action } from './action';
 import { Reducer } from './reducer';
-
-/**
- * Internal init action type
- */
-const INIT = '@@ngfk/INIT';
 
 /**
  * Internal reset action type
@@ -50,7 +46,7 @@ export class Store<State, ActionMap> {
      * The internal action BehaviorSubject, the `Store.action$` is created
      * from this action BehaviorSubject.
      */
-    protected actionSubject: BehaviorSubject<Action<any>>;
+    protected actionSubject: Subject<Action<any>>;
 
     /**
      * Creates a new instance of the Store class.
@@ -63,9 +59,8 @@ export class Store<State, ActionMap> {
         this.initial = initial || rootReducer();
 
         // Construct custom, shared, action$ using a new Subject.
-        const dummyAction: Action<any> = { type: INIT, payload: undefined };
-        this.actionSubject = new BehaviorSubject(dummyAction);
-        this.action$ = this.actionSubject.asObservable().share();
+        this.actionSubject = new Subject();
+        this.action$ = this.actionSubject.asObservable();
 
         // Construct an Observable state$ by reducing/scanning the actions over
         // the current state.
@@ -75,7 +70,10 @@ export class Store<State, ActionMap> {
             // Ensure every subscriber shares the same stream and receives the
             // last available value on subscribe, similar to the event stream
             // of a BehaviorSubject.
-            .shareReplay(1);
+            .multicast(new BehaviorSubject(this.initial))
+            // Use reference counting to manage the internal subscriptions of
+            // the Behavior Subject
+            .refCount();
 
         // Subscribe to the state$ to update our internal reference to the
         // current state.
