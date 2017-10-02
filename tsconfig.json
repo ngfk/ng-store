@@ -9,6 +9,7 @@
         "declaration": true,
         "sourceMap": true,
         "downlevelIteration": true,
+        "skipLibCheck": true,
 
         // Strict Type-Checking Options
         "strict": true,
