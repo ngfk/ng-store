@@ -1,1 +1,1 @@
-export { NgStoreModule, NgStoreOptions } from './ng-store.module';
+export { NgStoreModule, NgStoreConfig } from './ng-store.module';
