@@ -11,8 +11,8 @@
     "license": "ISC",
     "dependencies": {
         "@angular/core": "^4.4.4",
-        "@ngfk/ng-store": "0.0.8",
-        "@ngfk/store": "0.0.8",
+        "@ngfk/ng-store": "0.0.10",
+        "@ngfk/store": "0.0.10",
         "rxjs": "^5.4.3",
         "zone.js": "^0.8.18"
     }
