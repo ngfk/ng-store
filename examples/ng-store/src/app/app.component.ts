@@ -5,11 +5,14 @@ import { Todo } from '../models/todo';
 import { StoreService } from '../services/store.service';
 
 @Component({
-    selector: 'my-component',
+    selector: 'app-root',
     template: `
         <div>
+            <button (click)="dispatch()">dispatch</button>
+            <button (click)="clear()">clear</button>
+            <hr>
+            <p>State:</p>
             <pre>{{todos$ | async | json}}</pre>
-            <button (click)="dispatch">dispatch</button>
         </div>
     `
 })
@@ -22,5 +25,9 @@ export class AppComponent {
 
     public dispatch(): void {
         this.store.dispatch('TODO_ADD', 'Dispatched TODO!');
+    }
+
+    public clear(): void {
+        this.store.reset();
     }
 }

@@ -6,7 +6,7 @@ export interface FilterActionMap {
     FILTER_SET: Filter;
 }
 
-const initial: Filter = Filter.All;
+const initial: Filter = 'All';
 
 export const filterReducer: Reducer<Filter> = createReducer<
     Filter,

@@ -1,4 +1,4 @@
-import { combineReducers } from '@ngfk/store';
+import { combineReducers, Reducer } from '@ngfk/store';
 
 import { Filter } from '../models/filter';
 import { Todo } from '../models/todo';
@@ -12,7 +12,7 @@ export interface State {
 
 export interface ActionMap extends TodoActionMap, FilterActionMap {}
 
-export const reducer = combineReducers<State>({
+export const reducer: Reducer<State> = combineReducers<State>({
     todos: todoReducer,
     filter: filterReducer
 });
