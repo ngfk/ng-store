@@ -32,21 +32,9 @@ export class Store<State, ActionMap> implements IStore<State, ActionMap> {
      */
     public state$: Observable<State>;
 
-    /**
-     * The current state.
-     */
-    public state: State;
-
-    /**
-     * The initial state, this is the state used by default on `Store.reset`.
-     */
     protected initial: State;
-
-    /**
-     * The internal action BehaviorSubject, the `Store.action$` is created
-     * from this action BehaviorSubject.
-     */
     protected actionSubject: Subject<Action<any>>;
+    protected stateSubject: BehaviorSubject<State>;
 
     /**
      * Creates a new instance of the Store class.
@@ -58,8 +46,10 @@ export class Store<State, ActionMap> implements IStore<State, ActionMap> {
         const rootReducer = this.extendReducer(reducer);
         this.initial = initial || rootReducer();
 
-        // Construct custom, shared, action$ using a new Subject.
         this.actionSubject = new Subject();
+        this.stateSubject = new BehaviorSubject(this.initial);
+
+        // Construct custom action$ using the action Subject.
         this.action$ = this.actionSubject.asObservable();
 
         // Construct an Observable state$ by reducing/scanning the actions over
@@ -70,15 +60,18 @@ export class Store<State, ActionMap> implements IStore<State, ActionMap> {
             // Ensure every subscriber shares the same stream and receives the
             // last available value on subscribe, similar to the event stream
             // of a BehaviorSubject.
-            .multicast(new BehaviorSubject(this.initial));
+            .multicast(this.stateSubject);
 
         // The multicast operator returns a ConnectableObservable which must be
         // connected to the internal Subject to begin emitting items.
         (this.state$ as ConnectableObservable<State>).connect();
+    }
 
-        // Subscribe to the state$ to update our internal reference to the
-        // current state.
-        this.subscribe(state => (this.state = state));
+    /**
+     * Read the current state within the store.
+     */
+    public getState(): State {
+        return this.stateSubject.getValue();
     }
 
     /**
@@ -151,8 +144,8 @@ export class Store<State, ActionMap> implements IStore<State, ActionMap> {
 export interface IStore<S, A> {
     action$: Observable<Action<any>>;
     state$: Observable<S>;
-    state: S;
 
+    getState(): S;
     dispatch<Type extends keyof A>(type: Type, payload?: A[Type]): void;
     select<T>(selector: (state: S) => T): Observable<T>;
     reset(state?: S): void;
