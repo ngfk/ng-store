@@ -6,6 +6,7 @@ State management powered by [RxJS](https://github.com/ReactiveX/rxjs) enforcing 
 
 ## Setup
 
+[TLDR](examples/ng-store)
 1. Define state structure
 2. Map actions
 3. Create reducers
@@ -86,28 +87,34 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngfk/store';
 
 @Injectable()
-export class StoreService extends Store<State, ActionMap> { }
+export class StoreService extends Store<State, ActionMap> {
+    constructor() {
+        super(reducer);
+    }
+}
 ```
 
 ```typescript
 import { NgModule } from '@angular/core';
 import { NgStoreModule } from '@ngfk/ng-store';
 
+import { StoreService } from '../services/store.service';
+
 @NgModule({
     imports: [
         NgStoreModule.forRoot({
             store: StoreService,
-            reducer: reducer
+            deps: []
         })
     ]
 })
 export class AppModule {}
-
 ```
 
 ## Example Usage
 ```typescript
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'my-component',
@@ -116,10 +123,9 @@ import { Component } from '@angular/core';
             <pre>{{todos$ | async | json}}</pre>
             <button (click)="dispatch">dispatch</button>
         </div>
-    `,
+    `
 })
-export class MyComponent {
-
+export class AppComponent {
     public todos$: Observable<Todo[]>;
 
     constructor(private store: StoreService) {
@@ -127,10 +133,7 @@ export class MyComponent {
     }
 
     public dispatch(): void {
-        this.store.dispatch('TODO_ADD', {
-            id: 0,
-            text: 'Dispatched TODO!'
-        });
+        this.store.dispatch('TODO_ADD', 'Dispatched TODO!');
     }
 }
 ```
