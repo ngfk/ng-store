@@ -146,7 +146,3 @@ export class Store<State, ActionMap> {
         };
     }
 }
-
-export type StoreConstructor<State> = {
-    new (reducer: Reducer<State>, initialState?: State): Store<State, any>;
-};
